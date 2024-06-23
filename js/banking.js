@@ -30,20 +30,25 @@ function updateBalance(amount, isAdd) {
 document.getElementById('deposite-button').addEventListener('click', function () {
 
     const depositeAmount = getInputValue('deposite-input');
+    if (depositeAmount > 0) {
+        updateTotalFiled('deposite-total', depositeAmount);
+        updateBalance(depositeAmount, true);
+    }
+    else {
+        alert('Enter The positive Number')
+    }
 
-    updateTotalFiled('deposite-total', depositeAmount);
-
-
-    updateBalance(depositeAmount, true);
 
 });
 
 document.getElementById('withdraw-button').addEventListener('click', function () {
     const withdrawAmount = getInputValue('withdraw-input');
-
-    updateTotalFiled('withdraw-total', withdrawAmount);
-
-    updateBalance(withdrawAmount, false);
-
+    if (withdrawAmount > 0) {
+        updateTotalFiled('withdraw-total', withdrawAmount);
+        updateBalance(withdrawAmount, false);
+    }
+    else {
+        alert('Enter The positive Number')
+    }
 
 })
