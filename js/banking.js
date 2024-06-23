@@ -1,41 +1,49 @@
-document.getElementById('deposite-button').addEventListener('click', function () {
-    const depositeInput = document.getElementById('deposite-input');
-    const depositeAmountText = depositeInput.value;
-    const depositeAmount = parseFloat(depositeAmountText);
+function getInputValue(inputId) {
+    const inputFiled = document.getElementById(inputId);
+    const inputAmountText = inputFiled.value;
+    const inputAmount = parseFloat(inputAmountText);
+    // clear input filed 
+    inputFiled.value = '';
+    return inputAmount;
+};
 
-    // deposit Total 
-    const depositTotal = document.getElementById('deposite-total');
+function updateTotalFiled(totalFiledId, amount) {
+    const depositTotal = document.getElementById(totalFiledId);
     const depositTotalText = depositTotal.innerText;
     const depositeTotalAmount = parseFloat(depositTotalText);
-    depositTotal.innerText = depositeTotalAmount + depositeAmount;
+    depositTotal.innerText = depositeTotalAmount + amount;
+};
 
-    // balance added 
+function updateBalance(amount, isAdd) {
     const balanceTotal = document.getElementById('total-balance');
     const balanceTotalText = balanceTotal.innerText;
     const previusBalanceTotal = parseFloat(balanceTotalText);
-    balanceTotal.innerText = previusBalanceTotal + depositeAmount;
+    if (isAdd == true) {
+        balanceTotal.innerText = previusBalanceTotal + amount;
+    }
+    else {
+        balanceTotal.innerText = previusBalanceTotal - amount;
+    }
 
-    // clear input filed 
-    depositeInput.value = '';
+}
+
+document.getElementById('deposite-button').addEventListener('click', function () {
+
+    const depositeAmount = getInputValue('deposite-input');
+
+    updateTotalFiled('deposite-total', depositeAmount);
+
+
+    updateBalance(depositeAmount, true);
+
 });
 
 document.getElementById('withdraw-button').addEventListener('click', function () {
-    const withdrawInput = document.getElementById('withdraw-input');
-    const withdrawAmountText = withdrawInput.value;
-    const withdrawAmount = parseFloat(withdrawAmountText);
+    const withdrawAmount = getInputValue('withdraw-input');
 
-    // withdraw Amount added 
-    const withdrawTotal = document.getElementById('withdraw-total');
-    const withdrawTotalText = withdrawTotal.innerText;
-    const withdrawTotalAmount = parseFloat(withdrawTotalText);
-    withdrawTotal.innerText = withdrawTotalAmount + withdrawAmount;
+    updateTotalFiled('withdraw-total', withdrawAmount);
 
-    // balance Total mainus 
-    const balanceTotal = document.getElementById('total-balance');
-    const balanceTotalText = balanceTotal.innerText;
-    const previusBalanceTotal = parseFloat(balanceTotalText);
-    balanceTotal.innerText = previusBalanceTotal - withdrawAmount;
+    updateBalance(withdrawAmount, false);
 
-    // clear withdraw input filed 
-    withdrawInput.value = '';
+
 })
